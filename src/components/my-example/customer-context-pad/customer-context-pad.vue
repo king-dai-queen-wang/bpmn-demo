@@ -1,19 +1,23 @@
 <template>
   <div class="dww-example">
-    自定义 context pad
+    自定义context-pad和 palette , 右边弹出属性菜单（不写入xml）
     <div class="containers">
       <div class="canvas" ref="canvas"></div>
+      <propertyPanel class="property-panel"></propertyPanel>
     </div>
-
   </div>
 
 </template>
 
 <script>
 import {CustomModeler} from "./index";
+import propertyPanel from './property-panel/property-panel';
 import {defaultXML} from './defatltXML.js';
 export default {
   name: "customerContextPad",
+  components: {
+    propertyPanel
+  },
   data() {
     return {
       defaultXML: ``,
@@ -72,12 +76,17 @@ export default {
 
 <style scoped>
 .containers {
-  width: 100%;
+  display: flex;
   height: calc(100vh - 82px);
 }
 .canvas {
-  width: 100%;
+  flex: 1;
   height: 100%;
+}
+
+.property-panel{
+  background: pink;
+  width: 200px;
 }
 
 .highlight-overlay {

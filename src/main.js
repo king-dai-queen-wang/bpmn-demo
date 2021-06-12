@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import $ from "jquery" //加上这句话
+import store from './store/index'
 // bpmn 相关依赖
 import 'bpmn-js/dist/assets/diagram-js.css' 
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -20,5 +21,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

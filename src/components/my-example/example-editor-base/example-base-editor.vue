@@ -1,7 +1,9 @@
 <template>
   <div class="dww-example">
-    基本使用
-    <div id="canvas" class="containers" style="height:80vh;"></div>
+    基本使用 (CAMUADA)
+    <div id="canvas" class="containers" style="height:80vh;">
+    </div>
+    <div id="js-properties-panel" class="properties-panel"></div>
     <div class="toolbox">
       <li>
         <a href="javascript:" class="active" @click="handlerUndo" title="撤销操作">撤销</a>
@@ -37,7 +39,13 @@
 </template>
 
 <script>
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css' // 右边工具栏样式
 import BpmnModeler from "bpmn-js/lib/Modeler";
+import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
+import propertiesPanelModule from 'bpmn-js-properties-panel';
+// 一个描述的json
+import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
+
 export default {
   name: "baseEditor",
   data() {
@@ -67,6 +75,20 @@ export default {
     initCanvas() {
       this.bpmnModeler = new BpmnModeler({
         container: '#canvas',
+        //添加控制板
+        propertiesPanel: {
+          parent: '#js-properties-panel'
+        },
+        additionalModules: [
+          // 左边工具栏以及节点
+          propertiesProviderModule,
+          // 右边的工具栏
+          propertiesPanelModule
+        ],
+        moddleExtensions: {
+          //如果要在属性面板中维护camunda：XXX属性，则需要此
+          camunda: camundaModdleDescriptor
+        },
         // 快捷键
         keyboard: {
           bindTo: window
@@ -197,5 +219,15 @@ export default {
     width: 100%;
     height: calc(100vh - 82px);
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  }
+  .properties-panel{
+    margin: 70px 0 106px 0;
+    overflow: auto;
+    width: 30%;
+    position: absolute;
+    background-color: #f8f8f8;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 </style>

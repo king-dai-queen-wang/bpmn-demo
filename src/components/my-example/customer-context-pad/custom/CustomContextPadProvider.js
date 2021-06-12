@@ -1,4 +1,5 @@
 import { assign } from "min-dash";
+import store from "../../../../store";
 
 export default function ContextPadProvider(
     config,
@@ -77,6 +78,12 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
         modeling.removeElements([element]);
     }
 
+    function clickElement(e) {
+        store.commit("SETNODEINFO", element);
+        store.commit("TOGGLENODEVISIBLE", true);
+    }
+
+
     var actions = {};
 
     if (
@@ -88,7 +95,9 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
                 group: "edit",
                 className: "bpmn-icon-business-rule",
                 title: translate("属性"),
-                action: {}
+                action: {
+                    click: clickElement
+                }
             }
         });
     }
