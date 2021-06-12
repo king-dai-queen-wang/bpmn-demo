@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
+import $ from "jquery" //加上这句话
 // bpmn 相关依赖
 import 'bpmn-js/dist/assets/diagram-js.css' 
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -13,7 +13,7 @@ import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+window.$ = $;
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false
