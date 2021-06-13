@@ -6,6 +6,11 @@ import baseEditor from '../components/my-example/example-editor-base/example-bas
 import baseViewer from '../components/my-example/example-viewer/example-viewer'
 import customerPalette from '../components/my-example/customer-pattle/customer-palette'
 import customerContextPad from '../components/my-example/customer-context-pad/customer-context-pad'
+import CustomerPropertyPanel from '../components/my-example/customer-property-panel/customer-property-panel'
+import CustomerActivitiPanel from '../components/my-example/customer-activiti-panel/customer-activiti-panel';
+import App from "../components/yiyang-activiti/App";
+import Modeler from "../components/yiyang-activiti/edit-modeler/components/Modeler";
+import Viewer from "../components/yiyang-activiti/edit-modeler/components/Viewer";
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,6 +18,30 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/yiyang-activiti',
+    name: 'yiyang',
+    component: App,
+    children: [
+      {
+        path: '/',
+        name: 'Modeler',
+        component: Modeler
+      },
+      {
+        path: '/edit-modeler/modeler',
+        name: 'Modeler',
+        component: Modeler
+
+      },
+      {
+        path: '/edit-modeler/viewer',
+        name: 'Viewer',
+        component: Viewer
+
+      }
+    ]
   },
   {
     path: '/dww-example',
@@ -33,6 +62,14 @@ const routes = [
       path: 'customer-context-pad',
       name: 'customer-context-pad',
       component: customerContextPad
+    }, {
+      path: 'customer-property-panel',
+      name: 'customer-property-panel',
+      component: CustomerPropertyPanel
+    }, {
+      path: 'customer-activiti-panel',
+      name: 'customer-activiti-panel',
+      component: CustomerActivitiPanel
     }],
     component: MyExample
   }

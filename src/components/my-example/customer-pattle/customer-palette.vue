@@ -3,6 +3,9 @@
     自定义 palette
     <div class="containers">
       <div class="canvas" ref="canvas"></div>
+      <li>
+        <a href="javascript:" @click="saveXML" title="保存为bpmn">保存为BPMN文件</a>
+      </li>
     </div>
 
   </div>
@@ -17,7 +20,7 @@ export default {
   data() {
     return {
       defaultXML: ``,
-      bpmnViewer: null,
+      bpmnModeler: null,
       container: null,
       canvas: null,
       scale: 1,
@@ -31,7 +34,7 @@ export default {
   methods: {
     initCanvas() {
       const canvas = this.$refs.canvas;
-      this.bpmnViewer = new CustomModeler({
+      this.bpmnModeler = new CustomModeler({
         container: canvas,
         // 快捷键
         keyboard: {
@@ -43,7 +46,7 @@ export default {
     // 导入xml
     async createNewDiagram(bpmn) {
       try {
-        const result = await this.bpmnViewer.importXML(bpmn);
+        const result = await this.bpmnModeler.importXML(bpmn);
         // const { warnings } = result;
         // console.log(warnings);
         this.success();
@@ -51,18 +54,51 @@ export default {
         console.log(err.message, err.warnings);
       }
     },
+    async saveXML() {
+      try {
+        const result = await this.bpmnModeler.saveXML({ format: true });
+        const { xml } = result;
+
+        var xmlBlob = new Blob([xml], {
+          type: "application/bpmn20-xml;charset=UTF-8,"
+        });
+
+        var downloadLink = document.createElement("a");
+        downloadLink.download = "ops-coffee-bpmn.bpmn";
+        downloadLink.innerHTML = "Get BPMN SVG";
+        downloadLink.href = window.URL.createObjectURL(xmlBlob);
+        downloadLink.onclick = function(event) {
+          document.body.removeChild(event.target);
+        };
+        downloadLink.style.visibility = "hidden";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      } catch (err) {
+        console.log(err);
+      }
+    },
     success() {
       this.addEventBusListener();
     },
     addEventBusListener() {
       const that = this;
-      const eventBus = this.bpmnViewer.get("eventBus");
+      const eventBus = this.bpmnModeler.get("eventBus");
+      const modeling = this.bpmnModeler.get('modeling')
+      const elementRegistry = this.bpmnModeler.get('elementRegistry');
 
       eventBus.on("element.click", function(e) {
         console.log("eventBusListener", e);
+        var shape = e.element ? elementRegistry.get(e.element.id) : e.shape
+        if (shape.type === 'bpmn:Task') {
+          modeling.updateProperties(shape, {
+            name: '我是修改后的节点,并且同步到xml里',
+            isInterrupting: false,
+            customText: '我是自定义的text属性'
+          })
+        }
       });
 
-      const canvas = this.bpmnViewer.get("canvas");
+      const canvas = this.bpmnModeler.get("canvas");
       canvas.zoom("fit-viewport", "auto");
     }
   },

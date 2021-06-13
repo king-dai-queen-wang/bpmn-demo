@@ -22,7 +22,7 @@ export default function ContextPadProvider(
         this.autoPlace = injector.get("autoPlace", false);
     }
 
-    contextPad.registerProvider(this);
+    contextPad.registerProvider(this); // 定义这是一个contextPad
 }
 
 ContextPadProvider.$inject = [
@@ -74,6 +74,20 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
         };
     }
 
+    function appendTask(event, element) {
+        if (autoPlace) {
+            const shape = elementFactory.createShape({ type: 'bpmn:Task' });
+            autoPlace.append(element, shape);
+        } else {
+            appendTaskStart(event, element);
+        }
+    }
+
+    function appendTaskStart(event) {
+        const shape = elementFactory.createShape({ type: 'bpmn:Task' });
+        create.start(event, shape, element);
+    }
+
     function removeElement(e) {
         modeling.removeElements([element]);
     }
@@ -103,6 +117,15 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
     }
 
     assign(actions, {
+        'append.lindaidai-task': {
+            group: 'model',
+            className: 'icon-custom lindaidai-task',
+            title: translate('创建一个类型为lindaidai-task的任务节点'),
+            action: {
+                click: appendTask,
+                dragstart: appendTaskStart
+            }
+        },
         delete: {
             group: "edit",
             className: "bpmn-icon-trash",

@@ -2,8 +2,9 @@
   <div class="dww-example">
     基本使用 (CAMUADA)
     <div id="canvas" class="containers" style="height:80vh;">
+      <div id="js-properties-panel" class="properties-panel"></div>
     </div>
-    <div id="js-properties-panel" class="properties-panel"></div>
+
     <div class="toolbox">
       <li>
         <a href="javascript:" class="active" @click="handlerUndo" title="撤销操作">撤销</a>
@@ -31,6 +32,9 @@
       </li>
       <li>
         <a href="javascript:" @click="saveSVG" title="保存为svg">保存为SVG图片</a>
+      </li>
+      <li>
+        <a href="javascript:" @click="watchXML" title="查看xml">查看xml</a>
       </li>
     </div>
 
@@ -192,7 +196,18 @@ export default {
       eventBus.on("element.click", function(e) {
         console.log("eventBusListener", e);
       });
-    }
+    },
+    watchXML() {
+      this.bpmnModeler.saveXML({format:true},function(err,xml){
+        if(err){
+          console.error('流程数据生成失败');
+          console.log(err);
+          return;
+        }
+        console.log(xml);
+
+      });
+    },
   },
 
 }
@@ -207,6 +222,7 @@ export default {
   }
 
   .containers {
+    position: relative;
     background: white;
     overflow: auto;
     background-image: linear-gradient(
@@ -221,13 +237,11 @@ export default {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   }
   .properties-panel{
-    margin: 70px 0 106px 0;
     overflow: auto;
     width: 30%;
+    height: 100%;
     position: absolute;
-    background-color: #f8f8f8;
     right: 0;
-    top: 0;
-    bottom: 0;
+    z-index: 1;
   }
 </style>
