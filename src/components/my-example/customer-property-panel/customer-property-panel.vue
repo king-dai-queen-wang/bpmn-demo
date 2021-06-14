@@ -8,6 +8,9 @@
       <li>
         <a href="javascript:" @click="saveXML" title="保存为bpmn">保存为BPMN文件</a>
       </li>
+      <li>
+        <a href="javascript:" @click="watchXML" title="查看xml">查看xml</a>
+      </li>
     </div>
   </div>
 
@@ -100,6 +103,16 @@ export default {
       } catch (err) {
         console.log(err.message, err.warnings);
       }
+    },
+    async watchXML() {
+      try {
+        const result = await this.bpmnModeler.saveXML({ format: true });
+        const { xml } = result;
+        console.log(xml);
+      } catch (e) {
+        console.error('生成失败', e)
+      }
+
     },
     async saveXML() {
       try {

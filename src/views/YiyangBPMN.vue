@@ -188,10 +188,11 @@ export default {
       that.params.row = row
       // 到后台请求xml文件
       await request({
-        url: `/workflow/model/${row.id}/xml`
+        url: 'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmnMock.bpmn'
+        // url: `/workflow/model/${row.id}/xml`
       })
       .then(function(res) {
-        that.params.bpmnXml = res.data.bpmnXml;
+        that.params.bpmnXml = res.data;
       })
       .catch(function(err) {
         console.log('获取反显流程xml失败')

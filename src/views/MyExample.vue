@@ -31,7 +31,7 @@ export default {
         { to: '/dww-example/customer-context-pad', title: '自定义context-pad和 palette , 右边弹出属性菜单（不写入xml）' },
         { to: '/dww-example/customer-property-panel', title: '自定义右侧属性菜单，写入xml' },
         { to: '/dww-example/customer-activiti-panel', title: 'activiti panel' },
-        { to: '/dww-example/event', title: '绑定event事件' }
+        { to: '/dww-example/customer-property-panel-v2', title: 'customer-property-panel-v2' }
       ]
     }
   }

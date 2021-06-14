@@ -4,11 +4,11 @@
   :visible.sync="dialogVisible"
   width="90%"
   :before-close="handleClose">
-  <Modeler ref="modeler" :params="params"></Modeler>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="handleClose">取 消</el-button>
-    <el-button type="primary" @click="handleOk">确 定</el-button>
-  </span>
+    <Modeler ref="modeler" :params="params"></Modeler>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="handleClose">取 消</el-button>
+      <el-button type="primary" @click="handleOk">确 定</el-button>
+    </span>
 </el-dialog>
 </template>
 

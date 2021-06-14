@@ -1,17 +1,21 @@
 <template>
   <div>
     <el-container style="height: 500px">
+<!--      左侧-->
       <el-aside width="80%" hight="100%" style="border: 1px solid #DCDFE6">
+<!--         toolbox -->
         <el-button icon="el-icon-info" v-on:click="watchXML" class="watchXml">查看xml</el-button>
         <li>
           <a href="javascript:" @click="$refs.refFile.click()">加载本地BPMN文件</a>
           <input type="file" id="files" ref="refFile" style="display: none" @change="loadXML" />
 
         </li>
+<!--        bpmn 画板-->
         <!-- <el-button icon="el-icon-download" v-on:click="saveSVG" >下载svg</el-button> -->
         <div ref="canvas" style="width: 100%;height: 90%">
         </div>
       </el-aside>
+<!-- 右侧属性栏-->
       <el-main style="border: 1px solid #DCDFE6;background-color:#FAFAFA
       ">
         <el-form label-width="50px" size="mini" label-position="ligh">
@@ -85,6 +89,7 @@ export default {
     }
   },
   methods: {
+    // 加载xml
     loadXML() {
       const that = this;
       const file = this.$refs.refFile.files[0];
@@ -95,7 +100,7 @@ export default {
         that.importBpmnXml(this.result)
       };
     },
-      //保存文档
+      //查看文档
       watchXML() {
         this.bpmnModeler.saveXML({format:true},function(err,xml){
             if(err){
@@ -107,6 +112,7 @@ export default {
 
         });
       },
+      // 保存xml
       saveXML(){
         const that = this;
         that.bpmnModeler.saveXML({format:true},function(err,xml){
@@ -142,6 +148,7 @@ export default {
         });
 
       },
+      // 保存图片
       saveSVG(call){
         this.bpmnModeler.saveSVG(function(err,xml){
             if(err){
@@ -169,6 +176,7 @@ export default {
               activiti: activitiModdleDescriptor
           }
         });
+        // 默认进来初始化xml
         this.importBpmnXml()
 
       },
@@ -191,13 +199,17 @@ export default {
       getBpmnModeler() {
         return this.bpmnModeler
       },
+      // 创建完bpmnModeler 实例后绑定事件
       success() {
-        console.log('创建成功!');
+
         // 初始化element
         const elementRegistry = this.bpmnModeler.get('elementRegistry')
         const shape = elementRegistry.get('Process_1');
         this.element = shape;
+        console.log('创建成功!', this.element);
+        // 新增了 对shape的 增加，移动，删除监听事件
         this.addModelerListener()
+        // 对元素 点击，修改 的监听事件
         this.addEventBusListener()
         // 调控左侧工具栏
         this.adjustPalette();

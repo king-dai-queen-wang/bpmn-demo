@@ -9,6 +9,7 @@ import customerPalette from '../components/my-example/customer-pattle/customer-p
 import customerContextPad from '../components/my-example/customer-context-pad/customer-context-pad'
 import CustomerPropertyPanel from '../components/my-example/customer-property-panel/customer-property-panel'
 import CustomerActivitiPanel from '../components/my-example/customer-activiti-panel/customer-activiti-panel';
+import CustomerActivitiPanelV2 from '../components/my-example/customer-property-panel-v2/customer-activiti-panel-v2'
 import YiyangBPMN from "../views/YiyangBPMN";
 import Modeler from "../components/yiyang-activiti/edit-modeler/components/Modeler";
 import Viewer from "../components/yiyang-activiti/edit-modeler/components/Viewer";
@@ -77,7 +78,12 @@ const routes = [
       path: 'customer-activiti-panel',
       name: 'customer-activiti-panel',
       component: CustomerActivitiPanel
-    }],
+    },
+      {
+        path: 'customer-property-panel-v2',
+        name: 'customer-property-panel-v2',
+        component: CustomerActivitiPanelV2
+      }],
     component: MyExample
   }
 ]
