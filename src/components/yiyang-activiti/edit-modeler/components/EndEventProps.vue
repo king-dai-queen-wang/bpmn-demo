@@ -1,15 +1,15 @@
 <template>
     <div>
-        <el-form-item label="编号" v-show="false">
+        <el-form-item label="编号">
             <el-input v-model="id"></el-input>
         </el-form-item>
         <el-form-item label="名称">
             <el-input v-model="name"></el-input>
         </el-form-item>
-        <el-form-item label="表单标识" v-show="false">
+        <el-form-item label="表单标识">
             <el-input v-model="formKey"></el-input>
         </el-form-item>
-        <el-form-item label="文档" v-show="false">
+        <el-form-item label="文档">
             <el-input type="textarea" v-model="documentation"></el-input>
         </el-form-item>
     </div>
@@ -29,13 +29,13 @@ export default {
     },
 
     watch: {
-        id: function(newVal, oldVal) {
-            const bpmnModeler = this.bpmnModeler();
-            const modeling = bpmnModeler.get('modeling')
-            modeling.updateProperties(this.element,{
-                id: newVal
-            })
-        },
+        // id: function(newVal, oldVal) {
+        //     const bpmnModeler = this.bpmnModeler();
+        //     const modeling = bpmnModeler.get('modeling')
+        //     modeling.updateProperties(this.element,{
+        //         id: newVal
+        //     })
+        // },
         name: function(newVal, oldVal) {
             const bpmnModeler = this.bpmnModeler();
             const modeling = bpmnModeler.get('modeling')
@@ -47,7 +47,8 @@ export default {
             handler(newVal, oldVal) {
                 if (newVal != oldVal) {
                     if(newVal.type === 'bpmn:EndEvent') { // 防止修改其他子组件的属性
-                        this.name = newVal.name;
+                        this.name = newVal.name || newVal.businessObject.name;
+                        this.id = newVal.id;
                     }
                 }
             },

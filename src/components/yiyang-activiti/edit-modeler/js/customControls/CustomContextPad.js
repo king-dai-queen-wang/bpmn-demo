@@ -48,13 +48,13 @@ export default class CustomContextPad {
 
 
             return {
-            group: 'model',
-            className: className,
-            title: title,
-            action: {
-                dragstart: appendStart,
-                click: append
-            }
+                group: 'model',
+                className: className,
+                title: title,
+                action: {
+                    dragstart: appendStart,
+                    click: append
+                }
             };
         }
 
@@ -98,7 +98,14 @@ export default class CustomContextPad {
             return actions;
         }
         
-        if(element.type === 'bpmn:UserTask' || element.type === 'bpmn:CallActivity' || element.type === 'bpmn:ServiceTask' || element.type === 'bpmn:SequenceFlow' || element.type === 'bpmn:StartEvent'  || element.type === 'bpmn:ExclusiveGateway'  || element.type === 'bpmn:InclusiveGateway'  || element.type === 'bpmn:ParallelGateway' ) {
+        if(element.type === 'bpmn:UserTask' ||
+            element.type === 'bpmn:CallActivity' ||
+            element.type === 'bpmn:ServiceTask' ||
+            element.type === 'bpmn:SequenceFlow' ||
+            element.type === 'bpmn:StartEvent'  ||
+            element.type === 'bpmn:ExclusiveGateway'  ||
+            element.type === 'bpmn:InclusiveGateway'  ||
+            element.type === 'bpmn:ParallelGateway' ) {
           actions = {
             'append.end-event': appendAction(
                 'bpmn:EndEvent',

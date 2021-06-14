@@ -83,7 +83,8 @@ export default {
       //导入xml文档
       importBpmnXml(){
         const that = this;
-        let bpmnXml = bpmnHelper.getBpmnTempate();
+        let bpmnXml = '';
+        // let bpmnXml = bpmnHelper.getBpmnTempate();
         if(that.params.bpmnXml) {
           bpmnXml = that.params.bpmnXml
         }

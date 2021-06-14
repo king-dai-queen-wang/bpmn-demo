@@ -49,6 +49,7 @@ import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camu
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 // 一个描述的json
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
+import bpmnHelper from "../../yiyang-activiti/edit-modeler/js/helper/BpmnHelper";
 
 export default {
   name: "baseEditor",
@@ -187,15 +188,58 @@ export default {
       }
     },
     success() {
+      this.addModelerListener();
       this.addEventBusListener();
     },
+    // addEventBusListener() {
+    //   const that = this;
+    //   const eventBus = this.bpmnModeler.get("eventBus");
+    //
+    //   eventBus.on("element.click", function(e) {
+    //     console.log("eventBusListener", e);
+    //   });
+    // },
+    addModelerListener() {
+      // 监听 modeler
+      const bpmnjs = this.bpmnModeler
+      const that = this
+      // 'shape.removed', 'connect.end', 'connect.move'
+      const events = ['shape.added', 'shape.move.end', 'shape.removed']
+      events.forEach(function(event) {
+        that.bpmnModeler.on(event, e => {
+          var elementRegistry = bpmnjs.get('elementRegistry')
+          var shape = e.element ? elementRegistry.get(e.element.id) : e.shape
+          if (event === 'shape.added') {
+            console.log('新增了shape', event, shape);
+          } else if (event === 'shape.move.end') {
+            console.log('移动了shape', event, shape)
+          } else if (event === 'shape.removed') {
+            console.log('删除了shape',event, shape)
+          }
+        })
+      })
+    },
     addEventBusListener() {
-      const that = this;
-      const eventBus = this.bpmnModeler.get("eventBus");
-
-      eventBus.on("element.click", function(e) {
-        console.log("eventBusListener", e);
-      });
+      // 监听 element
+      let that = this
+      const eventBus = this.bpmnModeler.get('eventBus')
+      const eventTypes = ['element.click', 'element.changed', 'selection.changed']
+      eventTypes.forEach(function(eventType) {
+        eventBus.on(eventType, async function(e) {
+          if (eventType === 'element.changed') {
+            // await that.elementChanged(e)
+            console.log('element change', e)
+          } else if (eventType === 'element.click') {
+            if (!e || e.element.type == 'bpmn:Process') {
+              console.log(eventType, e,)
+            } else {
+              // 展示新增图形的属性
+              console.log(eventType, e,)
+            }
+            console.log('点击了element', e, that.propsComponent);
+          }
+        })
+      })
     },
     watchXML() {
       this.bpmnModeler.saveXML({format:true},function(err,xml){

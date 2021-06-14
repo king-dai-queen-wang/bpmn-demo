@@ -1,3 +1,4 @@
+// 自定义左侧的画板
 export default class CustomPalette {
     constructor(create, elementFactory, palette, translate) {
         this.create = create;

@@ -5,6 +5,7 @@
       <el-aside width="80%" hight="100%" style="border: 1px solid #DCDFE6">
 <!--         toolbox -->
         <el-button icon="el-icon-info" v-on:click="watchXML" class="watchXml">查看xml</el-button>
+        <el-button icon="el-icon-info" @click="saveXML" title="保存为bpmn">保存为BPMN文件</el-button>
         <li>
           <a href="javascript:" @click="$refs.refFile.click()">加载本地BPMN文件</a>
           <input type="file" id="files" ref="refFile" style="display: none" @change="loadXML" />
@@ -19,8 +20,9 @@
       <el-main style="border: 1px solid #DCDFE6;background-color:#FAFAFA
       ">
         <el-form label-width="50px" size="mini" label-position="ligh">
+          {{propsComponent}}
           <!-- 动态显示属性面板 -->
-          <component :is= "propsComponent" :element= "element" :key= "key"></component>
+          <component :class="propsComponent" :is="propsComponent" :element= "element" :key= "key"></component>
         </el-form>
       </el-main>
     </el-container>
@@ -66,6 +68,7 @@ export default {
     CallActivityProps
   },
   props:["params"],
+  // provide 提供 被注册的变量， 子、孙组件 inject 注入
   provide: function () {
     return {
       bpmnModeler: this.getBpmnModeler,
@@ -79,7 +82,7 @@ export default {
       bpmnModeler: null,
       canvas: null,
       element: null,
-      key: '1',
+      key: '',
       defaultData: {
         'bpmn:StartEvent': '交易开始',
         'bpmn:EndEvent':'交易完成',
@@ -113,42 +116,66 @@ export default {
         });
       },
       // 保存xml
-      saveXML(){
-        const that = this;
-        that.bpmnModeler.saveXML({format:true},function(err,xml){
-            if(err){
-              console.error('流程数据生成失败');
-              console.log(err);
-              return;
-            }
-            const modelId = '123';
-            that.bpmnModeler.saveSVG(function(err, svg) {
-              if(err){
-                console.error('流程数据生成失败！');
-                return;
-              }
-              const modelId = that.params.row.id;
-              request({
-                url: `/workflow/model/${modelId}/xml/save`,
-                method: 'post',
-                data: {
-                  bpmn_xml: xml,
-                  svg_xml: svg
-                }
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+      // saveXML(){
+      //   const that = this;
+      //   that.bpmnModeler.saveXML({format:true},function(err,xml){
+      //       if(err){
+      //         console.error('流程数据生成失败');
+      //         console.log(err);
+      //         return;
+      //       }
+      //       const modelId = '123';
+      //       that.bpmnModeler.saveSVG(function(err, svg) {
+      //         if(err){
+      //           console.error('流程数据生成失败！');
+      //           return;
+      //         }
+      //         const modelId = that.params.row.id;
+      //         request({
+      //           url: `/workflow/model/${modelId}/xml/save`,
+      //           method: 'post',
+      //           data: {
+      //             bpmn_xml: xml,
+      //             svg_xml: svg
+      //           }
+      //         })
+      //         .then(function (response) {
+      //           console.log(response);
+      //         })
+      //         .catch(function (error) {
+      //           console.log(error);
+      //         });
+      //
+      //       })
+      //
+      //   });
+      //
+      // },
+      // 保存图片
 
-            })
+    async saveXML() {
+      try {
+        const result = await this.bpmnModeler.saveXML({ format: true });
+        const { xml } = result;
 
+        var xmlBlob = new Blob([xml], {
+          type: "application/bpmn20-xml;charset=UTF-8,"
         });
 
-      },
-      // 保存图片
+        var downloadLink = document.createElement("a");
+        downloadLink.download = "ops-coffee-bpmn.bpmn";
+        downloadLink.innerHTML = "Get BPMN SVG";
+        downloadLink.href = window.URL.createObjectURL(xmlBlob);
+        downloadLink.onclick = function(event) {
+          document.body.removeChild(event.target);
+        };
+        downloadLink.style.visibility = "hidden";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      } catch (err) {
+        console.log(err);
+      }
+    },
       saveSVG(call){
         this.bpmnModeler.saveSVG(function(err,xml){
             if(err){
@@ -169,6 +196,7 @@ export default {
           //添加属性面板，添加翻译模块
           additionalModules: [
               customTranslateModule,
+              // 自定义部分
               customControlsModule
           ],
           //模块拓展，拓展activiti的描述
@@ -181,20 +209,27 @@ export default {
 
       },
       //导入xml文档
-      importBpmnXml(xml = ''){
+      async importBpmnXml(xml = ''){
         const that = this;
-        let bpmnXml = bpmnHelper.getBpmnTempate();
-        if(xml || that.params.bpmnXml) {
-          bpmnXml = xml || that.params.bpmnXml
+        // let bpmnXml = bpmnHelper.getBpmnTempate();
+        // if(xml || that.params.bpmnXml) {
+        //   bpmnXml =
+        // }
+        try {
+          const aa = await that.bpmnModeler.importXML(xml || that.params.bpmnXml);
+          console.log(aa)
+          that.success();
+        }catch (e) {
+          console.error('bpmn文档导入失败', e);
         }
-        that.bpmnModeler.importXML(bpmnXml,function(err){
-            if(err){
-                console.log('bpmn文档导入失败');
-            } else {
-              // 绑定监听事件
-              that.success()
-            }
-        });
+        // await that.bpmnModeler.importXML(bpmnXml,function(err){
+        //     if(err){
+        //
+        //     } else {
+        //       // 绑定监听事件
+        //       that.success()
+        //     }
+        // });
       },
       getBpmnModeler() {
         return this.bpmnModeler
@@ -204,11 +239,11 @@ export default {
 
         // 初始化element
         const elementRegistry = this.bpmnModeler.get('elementRegistry')
-        const shape = elementRegistry.get('Process_1');
+        const shape = elementRegistry.get(this.bpmnModeler.get('canvas').getRootElement().id);
         this.element = shape;
         console.log('创建成功!', this.element);
         // 新增了 对shape的 增加，移动，删除监听事件
-        this.addModelerListener()
+        // this.addModelerListener()
         // 对元素 点击，修改 的监听事件
         this.addEventBusListener()
         // 调控左侧工具栏
@@ -224,22 +259,21 @@ export default {
           that.bpmnModeler.on(event, e => {
             var elementRegistry = bpmnjs.get('elementRegistry')
             var shape = e.element ? elementRegistry.get(e.element.id) : e.shape
-            // console.log(shape)
             if (event === 'shape.added') {
-              console.log('新增了shape');
+              console.log('新增了shape', event, shape);
               // 展示新增图形的属性
               that.key = e.element.id.replace('_label', '');
               that.propsComponent = bpmnHelper.getComponentByEleType(shape.type);
               that.element = e.element;
 
             } else if (event === 'shape.move.end') {
-              console.log('移动了shape')
+              console.log('移动了shape', event, shape)
               // 展示新增图形的属性
               that.key = shape.id;
               that.propsComponent = bpmnHelper.getComponentByEleType(shape.type);
               that.element = e.shape;
             } else if (event === 'shape.removed') {
-              console.log('删除了shape')
+              console.log('删除了shape',event, shape)
               // 展示默认的属性
               that.propsComponent = 'CommonProps'
             }
@@ -252,22 +286,21 @@ export default {
         const eventBus = this.bpmnModeler.get('eventBus')
         const eventTypes = ['element.click', 'element.changed', 'selection.changed']
         eventTypes.forEach(function(eventType) {
-          eventBus.on(eventType, function(e) {
+          eventBus.on(eventType, async function(e) {
             if (eventType === 'element.changed') {
-              that.elementChanged(e)
+              await that.elementChanged(e)
             } else if (eventType === 'element.click') {
-              console.log('点击了element');
-              if (!e || e.element.type == 'bpmn:Process') {
-                that.key = '1';
-                that.propsComponent = 'CommonProps'
-                that.element = e.element;
+              if (!e || e.element.type === 'bpmn:Process') {
+                that.key =  e.element.id;
+                that.propsComponent =  'CommonProps'
+                that.element =  e.element;
               } else {
                 // 展示新增图形的属性
-                that.key = e.element.id;
-                that.propsComponent = bpmnHelper.getComponentByEleType(e.element.type);
-                that.element = e.element;
+                that.key = await  e.element.id;
+                that.propsComponent = await  bpmnHelper.getComponentByEleType(e.element.type);
+                that.element = await  e.element;
               }
-
+              console.log('点击了element', e, that.propsComponent);
             }
           })
         })
@@ -346,7 +379,7 @@ export default {
           }
           const palette = djsPalette.children[0];
           const allGroups = palette.children;
-          allGroups[0].style["display"] = "none";
+          // allGroups[0].style["display"] = "none";
           allGroups[4].style["display"] = "none";
           allGroups[5].style["display"] = "none";
           allGroups[6].style["display"] = "none";
