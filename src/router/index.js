@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
@@ -8,9 +9,10 @@ import customerPalette from '../components/my-example/customer-pattle/customer-p
 import customerContextPad from '../components/my-example/customer-context-pad/customer-context-pad'
 import CustomerPropertyPanel from '../components/my-example/customer-property-panel/customer-property-panel'
 import CustomerActivitiPanel from '../components/my-example/customer-activiti-panel/customer-activiti-panel';
-import App from "../components/yiyang-activiti/App";
+import YiyangBPMN from "../views/YiyangBPMN";
 import Modeler from "../components/yiyang-activiti/edit-modeler/components/Modeler";
 import Viewer from "../components/yiyang-activiti/edit-modeler/components/Viewer";
+import bpmn from "../components/bpmn/bpmn";
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,9 +22,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/camunda',
+    name: 'camunda',
+    component: bpmn
+  },
+  {
     path: '/yiyang-activiti',
     name: 'yiyang',
-    component: App,
+    component: YiyangBPMN,
     children: [
       {
         path: '/',

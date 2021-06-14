@@ -86,12 +86,12 @@
 // import Vue from 'vue'
 // import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import ProcessDesign from './edit-modeler/ProcessDesign'
-import ProcessView from './edit-modeler/ProcessView'
-import request from './util/request'
+import ProcessDesign from '../components/yiyang-activiti/edit-modeler/ProcessDesign'
+import ProcessView from '../components/yiyang-activiti/edit-modeler/ProcessView'
+import request from '../components/yiyang-activiti/util/request'
 // Vue.use(ElementUI)
 export default {
-  name: 'App',
+  name: 'YiyangBPMN',
   components: {
     ProcessDesign,
     ProcessView
@@ -170,7 +170,7 @@ export default {
       // await request({
       //   url: `/workflow/model/${row.id}/xml`
       // })
-      const xml = import('../../assets/routinecheck.js').then(res => {
+      const xml = await import('../assets/routinecheck.js').then(res => {
         return {data: {
           bpmnXml: res.xml
           }
