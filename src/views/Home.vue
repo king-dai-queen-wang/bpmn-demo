@@ -27,6 +27,7 @@ export default {
         { to: '/camunda', title: 'camunda' },
         { to: '/dww-example', title: '我的例子' },
         { to: '/yiyang-activiti', title: 'yiyang的activiti例子' },
+        {to: '/zjmzxfzhl-bpmn', title: 'zjmzxfzhlBpmn flowable 例子'}
       ]
     }
   }

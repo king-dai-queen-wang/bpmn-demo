@@ -14,6 +14,7 @@ import YiyangBPMN from "../views/YiyangBPMN";
 import Modeler from "../components/yiyang-activiti/edit-modeler/components/Modeler";
 import Viewer from "../components/yiyang-activiti/edit-modeler/components/Viewer";
 import bpmn from "../components/bpmn/bpmn";
+import zjmzxfzhlBpmn from "../views/zjmzxfzhlBpmn";
 Vue.use(VueRouter)
 
 const routes = [
@@ -85,6 +86,11 @@ const routes = [
         component: CustomerActivitiPanelV2
       }],
     component: MyExample
+  },
+  {
+    name: 'zjmzxfzhl-bpmn',
+    path:  '/zjmzxfzhl-bpmn',
+    component: zjmzxfzhlBpmn
   }
 ]
 
