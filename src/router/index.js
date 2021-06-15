@@ -15,6 +15,8 @@ import Modeler from "../components/yiyang-activiti/edit-modeler/components/Model
 import Viewer from "../components/yiyang-activiti/edit-modeler/components/Viewer";
 import bpmn from "../components/bpmn/bpmn";
 import zjmzxfzhlBpmn from "../views/zjmzxfzhlBpmn";
+
+import BpmnWebUi from '../components/bpm-web-ui/process/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -91,6 +93,11 @@ const routes = [
     name: 'zjmzxfzhl-bpmn',
     path:  '/zjmzxfzhl-bpmn',
     component: zjmzxfzhlBpmn
+  },
+  {
+    name: "bpmn-web-ui",
+    path: '/bpmn-web-ui',
+    component: BpmnWebUi
   }
 ]
 

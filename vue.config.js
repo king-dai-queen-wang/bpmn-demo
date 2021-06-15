@@ -27,8 +27,18 @@ module.exports = {
     lintOnSave: process.env.NODE_ENV === 'development',
     productionSourceMap: false,
     devServer: {
-        port: port
+        port: port,
+        proxy: {
+            '/lowCode': {    //将www.exaple.com印射为/apis
+                target: 'http://localhost:3000',  // 接口域名
+                secure: false,  // 如果是https接口，需要配置这个参数
+                changeOrigin: true,  //是否跨域
+                logLevel: 'debug',
+            }
+        }
     },
+
+
     configureWebpack: {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.
@@ -70,6 +80,9 @@ module.exports = {
                 return options
             })
             .end()
+
+        config.module.rule('bpmnlintrc').test(/\.bpmnlintrc$/).use('bpmnlint-loader').loader('bpmnlint-loader').end()
+
 
         config
         // https://webpack.js.org/configuration/devtool/#development

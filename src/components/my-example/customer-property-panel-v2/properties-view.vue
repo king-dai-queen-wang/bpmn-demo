@@ -50,11 +50,19 @@
           >{{ option.label }}</option>
         </select>
       </fieldset>
+      <hr style="margin: 5px"/>
+      <fieldset class="element-item">
+        <label>修改extension element节点类型</label>
+        <input :value="suitable" @change="(event) => changeExtensionField(event, 'suitable')" />
+      </fieldset>
+      <el-button @click="showExtensionXML">获取extension element 信息</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import * as viewer from "bpmn-js-properties-panel";
+
 export default {
   name: "PropertiesView",
   props: {
@@ -80,7 +88,8 @@ export default {
         { label: 'SendTask', value: 'bpmn:SendTask' },
         { label: 'UserTask', value: 'bpmn:UserTask' }
       ],
-      taskType: ''
+      taskType: '',
+      suitable: 0,
     }
   },
   created () {
@@ -183,6 +192,51 @@ export default {
         eventDefinitionType: value
       })
     },
+    getExtension(element, type) {
+      if (!element.extensionElements) {
+        return null;
+      }
+
+      return element.extensionElements.values.filter(function(e) {
+        return e.$instanceOf(type);
+      })[0];
+    },
+    showExtensionXML() {
+      const { element } = this
+      if (element) {
+        const { type, businessObject } = element;
+        const score = businessObject?.suitable;
+
+        const analysis = this.getExtension(businessObject, 'activiti:AnalysisDetails');
+        console.log(score, analysis)
+      }
+    },
+    changeExtensionField(event, type) {
+      // var element = event.element,
+      //     moddle = viewer.get('moddle'),
+      //
+      //     // the underlaying BPMN 2.0 element
+      //     businessObject = element.businessObject,
+      //     analysis,
+      //     score,
+      //     message;
+      // // we can access extension attribute properties
+      // score = businessObject.suitable;
+      //
+      // analysis = this.getExtension(businessObject, 'qa:AnalysisDetails');
+      //
+      // analysis = moddle.create('qa:AnalysisDetails');
+      // businessObject.extensionElements = businessObject.extensionElements || moddle.create('bpmn:ExtensionElements');
+      // businessObject.extensionElements.get('values').push(analysis);
+      const { element } = this
+      if (element) {
+        const { type, businessObject } = element;
+        businessObject.suitable = event.target.value;
+
+        const analysis = this.getExtension(businessObject, 'activiti:AnalysisDetails');
+        console.log(analysis)
+      }
+    }
   },
   computed: {
     isEvent() { // 判断当前点击的element类型是不是event

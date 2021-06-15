@@ -24,7 +24,7 @@
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css' // 右边工具栏样式
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import PropertiesView from './properties-view';
-
+import activitiPackage from './qa.json';
 export default {
   name: "CustomerActivitiPanelV2",
   components: {
@@ -60,6 +60,9 @@ export default {
         // 快捷键
         keyboard: {
           bindTo: window
+        },
+        moddleExtensions: {
+          activiti: activitiPackage
         }
       });
       this.createNewDiagram(this.defaultXML);
