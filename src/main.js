@@ -13,9 +13,15 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 import ElementUI from 'element-ui';
+
 import 'element-ui/lib/theme-chalk/index.css';
 import './css/app.css'
 import VueClipboard from "vue-clipboard2";
+import i18n from '@/components/bpm-web-ui/lang' // internationalization
+import '@/components/bpm-web-ui/icons' // icon
+// 自定义表格工具扩展
+import RightToolbar from '@/components/bpm-web-ui/RightToolbar'
+Vue.component('RightToolbar', RightToolbar)
 
 window.$ = $;
 Vue.use(ElementUI).use(VueClipboard);
@@ -25,5 +31,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

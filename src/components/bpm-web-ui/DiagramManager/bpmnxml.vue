@@ -2,7 +2,9 @@
   <div id="app-container">
     <div id="bpmnxml" ref="bpmnxml">
       <div class="showBPMNXML">
-        <codemirror
+        <textarea style="width: 100%" cols="50" rows="10" :value="diagramXml"
+                  :v-model="diagramXml"></textarea>
+<!--        <codemirror
           id="codemirror"
           ref="codemirror"
           :value="diagramXml"
@@ -10,7 +12,7 @@
           :options="cmOptions"
           class="code"
           @changes="codemirrorChange"
-        />
+        />-->
       </div>
     </div>
   </div>

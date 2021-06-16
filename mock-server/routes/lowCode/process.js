@@ -13,6 +13,6 @@ process.post('/getListPage', function (req, res) {
 // define the about route
 process.get('/about', function (req, res) {
     res.send('About birds')
-})
+});
 
 module.exports = process

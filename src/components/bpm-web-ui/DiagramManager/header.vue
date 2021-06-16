@@ -4,12 +4,12 @@
       <div>
         <el-button-group>
           <el-button plain size="small">
-            <a @click="handleOpen()">
+            <a @click="handleOpen($event)">
               <input
                 style="display:none"
                 type="file"
                 class="openFile"
-                @click="onOpenFile($event)"
+                @change="onOpenFile($event)"
               >
               <svg-icon icon-class="folder-open" />
               导入
@@ -35,6 +35,7 @@
           <el-button plain size="small" @click="align('center')"> <svg-icon icon-class="vertical-align-middle" /> 垂直对齐</el-button>
           <el-button plain size="small" @click="align('bottom')"> <svg-icon icon-class="vertical-align-bottom" /> 底部对齐</el-button>
           <el-button plain size="small" @click="validateDiagrame('bottom')"> <svg-icon icon-class="check" /> 校验</el-button>
+          <el-button plain size="small" @click="watch()"> <svg-icon icon-class="check" /> 查看xml </el-button>
 
         </el-button-group>
 
@@ -144,7 +145,10 @@ export default {
         })
       }
     },
+    // 查看
+    watch() {
 
+    },
     // 保存
     handleSave() {
       this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
@@ -255,11 +259,12 @@ export default {
       this.state.scale = newScale
     },
 
-    handleOpen() {
+    handleOpen(event) {
+      // event.preventDefault()
       document.getElementsByClassName('openFile')[0].click()
     },
-    onOpenFile(files) {
-      this.handleOpenFile(files)
+    onOpenFile(event) {
+      this.handleOpenFile(event)
     },
     handleFullScreen() {
       const element = document.documentElement

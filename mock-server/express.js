@@ -1,20 +1,22 @@
 const express = require('express')
-const { json, urlencoded } = require('body-parser');
 const app = express()
+const { json, urlencoded } = require('body-parser');
+
 const port = 3000
-const process = require('./routes/process');
-const processDetail = require('./routes/processDetail');
 /*app.all('*', (req, res, next) => {
     console.log('Request URL:', req.originalUrl)
     next()
 })*/
 
-app.use('/process', process);
-app.use('/processDetail', processDetail);
+
 app.use(urlencoded({
     extends: true
 }));
 app.use(json());
+app.use('/lowCode/process', require('./routes/lowCode/process'));
+app.use('/lowCode/processDetail', require('./routes/lowCode/processDetail'));
+app.use('/lowCode/dict', require('./routes/lowCode/dict'));
+// app.use('/lowCode/processDetail', require('./routes/lowCode/processDetail'))
 /*
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +26,7 @@ app.all('/', function(req, res, next) {
     next();
 })*/
 
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
-})
+});

@@ -19,3 +19,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+/mock-server/package-lock.json
+/mock-server/yarn.lock
