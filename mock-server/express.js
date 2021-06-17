@@ -16,6 +16,7 @@ app.use(json());
 app.use('/lowCode/process', require('./routes/lowCode/process'));
 app.use('/lowCode/processDetail', require('./routes/lowCode/processDetail'));
 app.use('/lowCode/dict', require('./routes/lowCode/dict'));
+app.use('/lowCode/company', require('./routes/lowCode/company'));
 // app.use('/lowCode/processDetail', require('./routes/lowCode/processDetail'))
 /*
 app.all('/', function(req, res, next) {

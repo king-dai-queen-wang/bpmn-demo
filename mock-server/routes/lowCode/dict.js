@@ -20,7 +20,11 @@ dict.post('/getRoleGroupDictByTenantId/:pig', function (req,res) {
 })
 
 dict.post('/getRoleDictByTenantId/:id', function (req,res) {
+    res.json({"code":200,"data":[{"disabled":false,"label":"【测试集团】管理员","value":"pig:administrastor"},{"disabled":false,"label":"总公司技术部负责人","value":"pig:role:techDirector"},{"disabled":false,"label":"总公司技术部经理","value":"pig:role:techManager"},{"disabled":false,"label":"总公司技术部职员","value":"pig:role:techStaff"},{"disabled":false,"label":"董事长","value":"pig:role:hairman"},{"disabled":false,"label":"总经理","value":"pig:role:generalManager"},{"disabled":false,"label":"总公司财务部负责人","value":"pig:role:financeDirector"},{"disabled":false,"label":"总公司财务部经理","value":"pig:role:financeManager"},{"disabled":false,"label":"总公司财务部职员","value":"pig:role:financeStaff"},{"disabled":false,"label":"广分总经理","value":"pig:role:gdBranchCompany:generalManager"},{"disabled":false,"label":"广分技术部负责人","value":"pig:role:gdBranchCompany:techDirector"},{"disabled":false,"label":"广分技术部职员","value":"pig:role:gdBranchCompany:techStaff"},{"disabled":false,"label":"广分财务部负责人","value":"pig:role:gdBranchCompany:financeDirector"},{"disabled":false,"label":"广分财务部职员","value":"pig:role:gdBranchCompany:financeStaff"}],"error":false,"message":"success","responseDate":"2021-06-17 15:46:56"})
+});
 
+dict.post('/getDictListByDictCode/organTree', function (req,res) {
+    res.json({"code":200,"data":[],"error":false,"message":"success","responseDate":"2021-06-17 15:46:00"});
 })
 
 
