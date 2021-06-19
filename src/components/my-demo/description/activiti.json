@@ -1,0 +1,175 @@
+{
+  "name": "Activiti",
+  "uri": "http://activiti.org/bpmn",
+  "prefix": "activiti",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "AnalyzedNode",
+      "extends": [
+        "bpmn:FlowNode"
+      ],
+      "properties": [
+        {
+          "name": "suitable",
+          "isAttr": true,
+          "type": "Float"
+        }
+      ]
+    },
+    {
+      "name": "AnalysisDetails",
+      "superClass": [ "Element" ],
+      "properties": [
+        {
+          "name": "lastChecked",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "nextCheck",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "comments",
+          "isMany": true,
+          "type": "Comment"
+        }
+      ]
+    },
+    {
+      "name": "ExecutionListener",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+          "bpmn:Task",
+          "bpmn:ServiceTask",
+          "bpmn:UserTask",
+          "bpmn:BusinessRuleTask",
+          "bpmn:ScriptTask",
+          "bpmn:ReceiveTask",
+          "bpmn:ManualTask",
+          "bpmn:ExclusiveGateway",
+          "bpmn:SequenceFlow",
+          "bpmn:ParallelGateway",
+          "bpmn:InclusiveGateway",
+          "bpmn:EventBasedGateway",
+          "bpmn:StartEvent",
+          "bpmn:IntermediateCatchEvent",
+          "bpmn:IntermediateThrowEvent",
+          "bpmn:EndEvent",
+          "bpmn:BoundaryEvent",
+          "bpmn:CallActivity",
+          "bpmn:SubProcess",
+          "bpmn:Process"
+        ]
+      },
+      "properties": [
+        {
+          "name": "expression",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "class",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "delegateExpression",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "event",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "script",
+          "type": "Script"
+        },
+        {
+          "name": "fields",
+          "type": "Field",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "TaskListener",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+          "bpmn:UserTask"
+        ]
+      },
+      "properties": [
+        {
+          "name": "expression",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "class",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "delegateExpression",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "event",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "script",
+          "type": "Script"
+        },
+        {
+          "name": "fields",
+          "type": "Field",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Field",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+          "activiti:ServiceTaskLike",
+          "activiti:ExecutionListener",
+          "activiti:TaskListener"
+        ]
+      },
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "expression",
+          "type": "String"
+        },
+        {
+          "name": "stringValue",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "string",
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

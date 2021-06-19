@@ -17,6 +17,7 @@ import bpmn from "../components/bpmn/bpmn";
 import zjmzxfzhlBpmn from "../views/zjmzxfzhlBpmn";
 
 import BpmnWebUi from '../components/bpm-web-ui/process/index.vue'
+import MyDemo from '@/views/MyDemo.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -98,6 +99,10 @@ const routes = [
     name: "bpmn-web-ui",
     path: '/bpmn-web-ui',
     component: BpmnWebUi
+  },{
+    path: '/my-demo',
+    name: 'my-demo',
+    component: MyDemo
   }
 ]
 

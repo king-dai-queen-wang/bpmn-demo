@@ -81,6 +81,13 @@ module.exports = {
             })
             .end()
 
+        config.module
+            .rule('bpmn')
+            .test(/\.bpmn$/)
+            .use('raw-loader')
+            .loader('raw-loader')
+            .end()
+
         config.module.rule('bpmnlintrc').test(/\.bpmnlintrc$/).use('bpmnlint-loader').loader('bpmnlint-loader').end()
 
 

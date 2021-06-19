@@ -407,7 +407,8 @@ export default {
     },
     isSequenceFlow(type) { // 判断是否是线
       return type === 'bpmn:SequenceFlow'
-    }, getShape(id) {
+    },
+    getShape(id) {
       var elementRegistry = this.bpmnModeler.get('elementRegistry')
       return elementRegistry.get(id)
     },

@@ -318,7 +318,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     /*左边工具栏以及编辑节点的样式*/
     /*@import "../../../node_modules/bpmn-js/dist/assets/diagram-js.css";
     @import "../../../node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css";

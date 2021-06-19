@@ -28,7 +28,8 @@ export default {
         { to: '/dww-example', title: '我的例子' },
         { to: '/yiyang-activiti', title: 'yiyang的activiti例子' },
         {to: '/zjmzxfzhl-bpmn', title: 'zjmzxfzhlBpmn flowable 例子'},
-        { to: '/bpmn-web-ui', title: 'bpmn-web-ui'}
+        { to: '/bpmn-web-ui', title: 'bpmn-web-ui'},
+        { to: '/my-demo', title: 'my-demo'}
       ]
     }
   }
