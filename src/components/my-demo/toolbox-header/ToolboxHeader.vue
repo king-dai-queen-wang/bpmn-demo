@@ -94,19 +94,19 @@ export default {
         console.log(err.message, err.warnings);
       }
     },
-
-    async watchXML() {
+    async generateXML() {
       const result = await this.bpmnModeler.saveXML({format:true});
       const { xml } = result;
-      const xmlRes = this.replaceLtAndGt(xml);
+      return this.replaceLtAndGt(xml);
+    },
+    async watchXML() {
+      const xmlRes = await this.generateXML();
       console.log(xmlRes);
     },
 
     async saveXML() {
       try {
-        const result = await this.bpmnModeler.saveXML({ format: true });
-        const { xml } = result;
-        const xmlRes = this.replaceLtAndGt(xml);
+        const xmlRes = await this.generateXML();
         var xmlBlob = new Blob([xmlRes], {
           type: "application/bpmn20-xml;charset=UTF-8,"
         });

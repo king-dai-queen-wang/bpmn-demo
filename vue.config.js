@@ -21,7 +21,7 @@ module.exports = {
      * In most cases please use '/' !!!
      * Detail: https://cli.vuejs.org/config/#publicpath
      */
-    publicPath: '/david/',
+    publicPath: '/',
     outputDir: 'dist',
     assetsDir: 'static',
     lintOnSave: process.env.NODE_ENV === 'development',
@@ -88,7 +88,10 @@ module.exports = {
             .loader('raw-loader')
             .end()
 
-        config.module.rule('bpmnlintrc').test(/\.bpmnlintrc$/).use('bpmnlint-loader').loader('bpmnlint-loader').end()
+        config.module.rule('bpmnlintrc')
+            .test(/\.bpmnlintrc$/)
+            .use('bpmnlint-loader')
+            .loader('bpmnlint-loader').end()
 
 
         config

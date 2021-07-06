@@ -103,6 +103,8 @@ import StartEventProps from "./props/StartEventProps";
 import UserTaskProps from "./props/UserTaskProps";
 import TemplateProps from "./props/TemplateProps";
 import SequenceFlowProps from "./props/SequenceFlowProps";
+import ExclusiveGatewayProps from './props/ExclusiveGatewayProps';
+
 export default {
     name: "ProcessPanel",
     props: {
@@ -122,7 +124,8 @@ export default {
       StartEventProps,
       UserTaskProps,
       TemplateProps,
-      SequenceFlowProps
+      SequenceFlowProps,
+      ExclusiveGatewayProps
     },
     provide: function() {
       return {

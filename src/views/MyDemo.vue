@@ -28,6 +28,10 @@ import ProcessPanel from '@/components/my-demo/properties-panel/ProcessPanel'
 import moddleDescriptor from "../components/my-demo/description/activiti.json";
 import CommonProps from "@/components/my-demo/properties-panel/props/CommonProps";
 import customTranslate from '../components/my-demo/i18n/customTranslate';
+import TokenSimulationModule from 'bpmn-js-token-simulation';
+import minimapModule from 'diagram-js-minimap';
+import lintModule from 'bpmn-js-bpmnlint';
+import bpmnlintConfig from '../components/my-demo/lint/.bpmnlintrc';
 
 export default {
   name: "MyDemo",
@@ -64,9 +68,15 @@ export default {
       // 建模
       this.bpmnModeler = new BpmnModeler({
         container: canvas,
+        // linting: {
+        //   bpmnlint: bpmnlintConfig
+        // },
         additionalModules: [
           //   i18n
-          customTranslateModule
+          customTranslateModule,
+          TokenSimulationModule,
+          minimapModule,
+          lintModule
           // 左边工具栏以及节点
           // propertiesProviderModule,
         ],

@@ -6,13 +6,17 @@
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "clean": "ssh root@121.4.172.113 rm -rf /usr/share/nginx/activiti-demo/*",
+    "copy": "scp -r ./dist root@121.4.172.113:/usr/share/nginx/activiti-demo/",
+    "deploy": "npm run clean && npm run copy"
   },
   "dependencies": {
     "@dagrejs/graphlib": "^2.1.4",
     "axios": "^0.21.1",
     "bpmn-auto-layout": "^0.1.0",
     "bpmn-js": "^8.6.1",
+    "bpmn-js-bpmnlint": "^0.18.0",
     "bpmn-js-properties-panel": "^0.43.0",
     "bpmn-js-token-simulation": "^0.21.1",
     "bpmn-js-transaction-boundaries": "^0.1.1",
