@@ -1,7 +1,6 @@
 <template>
   <div id="app-container">
     <div id="right" ref="right">
-
       <el-tabs v-model="activeName" type="border-card">
         <el-tab-pane name="first">
           <span slot="label"><i class="el-icon-date" /> 基本信息</span>

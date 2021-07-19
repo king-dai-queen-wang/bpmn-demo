@@ -11,7 +11,7 @@
     </ul>
 
     <router-view></router-view>
-
+    https://miyuesc.github.io/process-designer/
   </div>
 </template>
 
